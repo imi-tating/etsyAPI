@@ -1,0 +1,48 @@
+/* .fa-fish {
+  font-size: 1.5rem;
+  margin-right: -.5rem;
+} */
+
+.jumbotron {
+  background: white;
+  color: rgb(239, 77, 9);
+  padding: 5rem 0;
+  border-bottom: 1px solid rgb(26, 26, 26);
+}
+
+#title {
+  font-size: 6rem;
+}
+
+.form-group {
+  margin: 3rem auto;
+  max-width: 40rem;
+}
+
+.form-control:focus {
+  border-color: rgba(239, 77, 9, 0.1);
+  box-shadow: 0 0 0 .2rem rgba(239, 77, 9, 0.7);
+
+}
+
+#shop-being-viewed {
+  margin-bottom: 2rem;
+  font-size: 1.4rem;
+}
+
+#main-content {
+  margin: 0 auto;
+  max-width: 90%;
+}
+
+.blockquote {
+  font-size: 2rem;
+}
+
+/* @media screen and (min-width: 80rem) {
+  .fa-fish {
+    font-size: 2.3rem;
+    margin-right: .5rem;
+  }
+
+} */

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!--FontAwesome-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
+  <!--BootStrap-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+  <!--CSS File Link-->
+    <link rel="stylesheet" href="style.css">
+  <!--Firebase Link-->
+    <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-database.js"></script>
+  <!--jQuery-->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <!--moment.js Link-->
+    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+  <!--Bootstrap JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <!--Popper?-->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+  <!--Javascript file link-->
+    <script type="text/javascript" src="app.js"></script>
+  <title>Group Project one</title>
+</head>
+<body>
+  <!-- <nav class="navbar fixed-top">
+    <div class="navbar-brand">
+    </div>
+    <div class="dropdown">
+      <i id="dropdownMenu" class=" dropdown-btn fas fa-fish fa-flip-horizontal text-dark" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu">
+        <a class="dropdown-item" href="https://imi-tating.github.io/games.html">Return to All Games</a>
+      </div>
+    </div>
+  </nav> -->
+  <div id="jumbotron" class="jumbotron jumbotron-fluid text-center">
+    <h1 id="title" class="display-4">Ellie's <i class="fab fa-etsy"></i>tsy <i class="fas fa-store"></i> Reviews</h1>
+  </div>
+
+  <form class="form-group form-row">
+      <div class="col">
+        <input id="user-input" class="form-control form-control-lg text-right" type="text" placeholder="Enter Shop Name to See Reviews">
+      </div>
+      <div class="col-4">
+        <button id="shop-name-button" class="btn btn-outline-dark btn-lg" type="button">Show Me the Reviews</button>
+      </div>
+  </form>
+
+  <h5 id="shop-being-viewed" class="text-center text-muted lead"></h5>
+  <div id="main-content" class="card-columns">
+
+  </div>
+
+</body>
+</html>
