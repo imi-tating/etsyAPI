@@ -30,6 +30,15 @@
   font-size: 1.4rem;
 }
 
+a:link {
+  /* color: #343a40; */
+  color: rgb(239, 77, 9);
+}
+a:visited {
+  color: rgb(239, 77, 9);
+
+}
+
 #main-content {
   margin: 0 auto;
   max-width: 90%;

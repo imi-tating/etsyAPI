@@ -1,5 +1,49 @@
-function findReviews(etsyStore) {
-  var queryURL = "https://openapi.etsy.com/v2/users/"+ etsyStore + "/feedback/from-buyers?api_key=jh254t145a6wj2f9518tpu54&limit=100"
+function convertShopNameToUserId(etsyStoreName) {
+  var queryURL = "https://openapi.etsy.com/v2/shops?api_key=jh254t145a6wj2f9518tpu54&shop_name=" + etsyStoreName + "&limit=3"
+
+  $.ajax({
+    url: queryURL,
+    method: "GET"
+  }).then(function(response){
+
+    console.log("LOOK HERE!");
+    console.log(response);
+    console.log(" ");
+    console.log("SHOPS FOUND:");
+    console.log(response.results);
+    console.log("USER ID:");
+    console.log(response.results[0].user_id);
+
+    var foundShopName = response.results[0].shop_name;
+    var shopURL = response.results[0].url;
+
+    // if (response.count == 0) {
+    //   alert("shop not found");
+    // } else {
+    //   var newLink = $('<a>').attr("href", shopURL)
+    //   newLink.attr("target", "_blank");
+    //   newLink = newLink.text("Shop Being Viewed: " + foundShopName);
+    //   $("#shop-being-viewed").empty();
+    //   $("#shop-being-viewed").append(newLink);
+    //   findReviews(response.results[0].user_id)
+    // }
+
+
+    var newLink = $('<a>').attr("href", shopURL)
+    newLink.attr("target", "_blank");
+    newLink = newLink.text("Shop Being Viewed: " + foundShopName);
+    $("#shop-being-viewed").empty();
+    $("#shop-being-viewed").append(newLink);
+
+    findReviews(response.results[0].user_id);
+
+  })
+
+}
+
+function findReviews(userId) {
+
+  var queryURL = "https://openapi.etsy.com/v2/users/"+ userId + "/feedback/from-buyers?api_key=jh254t145a6wj2f9518tpu54&limit=100"
   // "https://openapi.etsy.com/v2/users/imitating/feedback/from-buyers?api_key=jh254t145a6wj2f9518tpu54&limit=100"
 
   $.ajax({
@@ -42,15 +86,14 @@ function turnMeEtsyOrange(){
 
 
 $(document).ready(function(){
-  findReviews("imitating");
+  convertShopNameToUserId("imitating");
 
   $("#shop-name-button").click(function(){
     // event.preventDefault();
     var shopName = $("#user-input").val().trim();
-    findReviews(shopName);
-    $("#shop-being-viewed").text("Shop Being Viewed: " + shopName);
-    $("#user-input").val("");
 
+    convertShopNameToUserId(shopName);
+    $("#user-input").val("");
 
   });
 
