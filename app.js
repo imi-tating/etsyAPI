@@ -17,7 +17,7 @@ function convertShopNameToUserId(etsyStoreName) {
     var foundShopName = response.results[0].shop_name;
     var shopURL = response.results[0].url;
 
-    // if (response.count == 0) {
+    // if (response.count === 0) {
     //   alert("shop not found");
     // } else {
     //   var newLink = $('<a>').attr("href", shopURL)
@@ -42,9 +42,7 @@ function convertShopNameToUserId(etsyStoreName) {
 }
 
 function findReviews(userId) {
-
   var queryURL = "https://openapi.etsy.com/v2/users/"+ userId + "/feedback/from-buyers?api_key=jh254t145a6wj2f9518tpu54&limit=100"
-  // "https://openapi.etsy.com/v2/users/imitating/feedback/from-buyers?api_key=jh254t145a6wj2f9518tpu54&limit=100"
 
   $.ajax({
     url: queryURL,
@@ -57,19 +55,26 @@ function findReviews(userId) {
 
 function showReviews(reviewArray) {
   $("#main-content").empty();
-  for(var i = 0; i < reviewArray.length; i++){
-    if(reviewArray[i].message) {
-      var newCard = $('<div class="card p-3 text-right">');
-      newCard.attr("data-clicked", "gray");
-      var newBlockQuote = $('<div class="blockquote mb-0">');
-      var newP = $('<p>');
-      newP.text(reviewArray[i].message);
+  $("#uhoh").empty();
 
-      newBlockQuote.append(newP);
-      newCard.append(newBlockQuote);
-      $("#main-content").append(newCard);
+  if (reviewArray.length === 0) {
+    $("#uhoh").html('<div class="card p-3 text-right uhoh" ><div class="blockquote mb-0"><p>Sadly, there are no reviews to display.<br>Perhaps you can be the first!<p><hr><div class="footer lead text-muted">(this does require making a purchase from their shop)<div></div></div>');
+  } else {
+    for(var i = 0; i < reviewArray.length; i++){
+      if(reviewArray[i].message) {
+        var newCard = $('<div class="card p-3 text-right">');
+        newCard.attr("data-clicked", "gray");
+        var newBlockQuote = $('<div class="blockquote mb-0">');
+        var newP = $('<p>');
+        newP.text(reviewArray[i].message);
+
+        newBlockQuote.append(newP);
+        newCard.append(newBlockQuote);
+        $("#main-content").append(newCard);
+      }
     }
   }
+
 }
 
 function turnMeEtsyOrange(){
