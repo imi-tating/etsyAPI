@@ -30,6 +30,11 @@
   font-size: 1.4rem;
 }
 
+.uhoh {
+  margin: 0 auto;
+  /* float: none; */
+}
+
 a:link {
   /* color: #343a40; */
   color: rgb(239, 77, 9);
