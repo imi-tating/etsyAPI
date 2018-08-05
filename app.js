@@ -1,3 +1,5 @@
+var allTheReviews = "";
+
 function convertShopNameToUserId(etsyStoreName) {
   var queryURL = "https://openapi.etsy.com/v2/shops?api_key=jh254t145a6wj2f9518tpu54&shop_name=" + etsyStoreName + "&limit=3"
 
@@ -56,6 +58,7 @@ function findReviews(userId) {
 function showReviews(reviewArray) {
   $("#main-content").empty();
   $("#uhoh").empty();
+  allTheReviews = "";
 
   if (reviewArray.length === 0) {
     $("#uhoh").html('<div class="card p-3 text-right uhoh" ><div class="blockquote mb-0"><p>Sadly, there are no reviews to display.<br>Perhaps you can be the first!<p><hr><div class="footer lead text-muted">(this does require making a purchase from their shop)<div></div></div>');
@@ -66,15 +69,17 @@ function showReviews(reviewArray) {
         newCard.attr("data-clicked", "gray");
         var newBlockQuote = $('<div class="blockquote mb-0">');
         var newP = $('<p>');
-        newP.text(reviewArray[i].message);
 
+        newP.text(reviewArray[i].message.replace(/&#39;/g, "'"));
         newBlockQuote.append(newP);
         newCard.append(newBlockQuote);
         $("#main-content").append(newCard);
+
+        allTheReviews += reviewArray[i].message.replace(/&#39;/g, "'");
       }
     }
   }
-
+  console.log("All the reviews: " + allTheReviews);
 }
 
 function turnMeEtsyOrange() {
@@ -87,8 +92,138 @@ function turnMeEtsyOrange() {
   }
 }
 
-function generateWordCloud() {
-  // var wordCloudText = "Great quality and great customer service. Perfect! Just what we wanted!! Absolutely LOVE these sea turtles!! Awesome customer service, and shipping was prompt. I highly recommend this shop! Thank you again so much for my little grouping! LOVE these turtles! Great customer service, and fast shipping! Highly recommend this shop! Well be buying again! I had such a pleasant experience ordering from this shop! I sent several messages with questions/requests, and always had a reply within minutes. I really feel the owners go above and beyond to make sure the customer is happy. Communication was always very friendly, and my kids had a great time customizing the size and colour of their dinosaurs. The extra goodies and hand written note were a really nice touch, thank you. Application was also very easy! This is definitely going to be my go-to any time I want to purchase decals! Wonderful seller to work with! Went above and beyond to get the decals to me in time for Christmas. Gift recipient loved them!! Highly recommend this seller. Easy ordering and fast shipping. The colors are vibrant and pop against the color of our car. Seller included extra tiny decals so we got to test applications before the real one. I really appreciated that extra touch and my son loves that he got a tiny green dinosaur on his window. Received early and was everything I expected and more! Thanks again! The decal came FAST. It was well-made with attention to detail and the instructions for how to install it on my laptop were top notch. Would buy from this store again in a heart beat! Love these decals soooo much!! I love this!!!! Thank you An amazing job.. Exactly what I asked for…. Adorable!!! Thank you Love them! They come quick shipping time and the owners go above and beyond Looks great, easy to apply. Was a gift, and the recipient loves it."
+function convertReviewsKeyWords() {
+  var text = allTheReviews;
+  // var convertApostrophyBack = text.replace(/&#39;/g, "'");
+  var noPunctuation = text.replace(/[\.\!\,\']/g, "");
+  // var removeWords = "a |an |the |and |this |that |these |those |he |his |her |hers |its |their |it |is |was |am |so |I |we |Id |my |you |your |yours |what |who |why |how |when |came |went |them |with |they |about |just |did |didnt |cant ";
+  // var re = new RegExp(removeWords, "gi")
+  // var keyWords = noPunctuation.replace(re,"");
+  var keyWords = noPunctuation.toLowerCase();
+  var arrayOfKeyWords = keyWords.split(" ").filter(function(eachWord) {
+    return !stopWords.includes(eachWord);
+  });
+
+  generateKeyValuePairsObject(arrayOfKeyWords);
+}
+
+function generateKeyValuePairsObject(arrayOfWords) {
+  var wordsCounted = arrayOfWords.reduce(function(current, next) {
+    if(current[next]) /* if word doesn't exist in object yet, then do: */{
+      current[next] += 1;
+    } else {
+      current[next] = 1;
+    }
+    return current;
+  }, {} /* this is the "current"/starting point/object */ );
+  console.log(wordsCounted);
+
+  var arrayOfObjects = [];
+  for(var word in wordsCounted) {
+    arrayOfObjects.push({ key: word, value: wordsCounted[word] });
+  }
+
+  arrayOfObjects.sort(function (a, b) {
+    return b.value - a.value
+  })
+
+  var slicedArray = arrayOfObjects.slice(0,300);
+
+  console.log(slicedArray)
+  generateWordCloud(slicedArray);
+}
+
+function generateWordCloud(wordCountObjects) {
+  // $(".fa-cloud").click();
+  // $("#word-cloud").append();
+  var fill = d3.scale.category20b();
+  var w = 800,
+        h = 800;
+  var max,
+        fontSize;
+  var layout = d3.layout.cloud()
+        .timeInterval(Infinity)
+        .size([w, h])
+        .fontSize(function(d) {
+            return fontSize(+d.value);
+        })
+        .text(function(d) {
+            return d.key;
+        })
+        .on("end", draw);
+
+  var svg = d3.select("#word-cloud").append("svg")
+        // .attr("width", w)
+        // .attr("height", h);
+
+  var vis = svg.append("g").attr("transform", "translate(" + [w >> 1, h >> 1] + ")");
+
+  update();
+
+  if(window.attachEvent) {
+    window.attachEvent('onresize', update);
+  } else if(window.addEventListener) {
+      window.addEventListener('resize', update);
+  }
+
+  function draw(data, bounds) {
+      var w = 800,
+            h = 800;
+
+      svg.attr("viewBox", "0 0 700 700");
+
+      scale = bounds ? Math.min(
+              w / Math.abs(bounds[1].x - w / 2),
+              w / Math.abs(bounds[0].x - w / 2),
+              h / Math.abs(bounds[1].y - h / 2),
+              h / Math.abs(bounds[0].y - h / 2)) / 2 : 1;
+
+      var text = vis.selectAll("text")
+              .data(data, function(d) {
+                  return d.text.toLowerCase();
+              });
+      text.transition()
+              .duration(1000)
+              .attr("transform", function(d) {
+                  return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+              })
+              .style("font-size", function(d) {
+                  return d.size + "px";
+              });
+      text.enter().append("text")
+              .attr("text-anchor", "middle")
+              .attr("transform", function(d) {
+                  return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+              })
+              .style("font-size", function(d) {
+                  return d.size + "px";
+              })
+              .style("opacity", 1e-6)
+              .transition()
+              .duration(1000)
+              .style("opacity", 1);
+      text.style("font-family", function(d) {
+          return d.font;
+      })
+              .style("fill", function(d) {
+                  return fill(d.text.toLowerCase());
+              })
+              .text(function(d) {
+                  return d.text;
+              });
+
+      vis.transition().attr("transform", "translate(" + [w >> 1, h >> 1] + ")scale(" + scale + ")");
+  }
+
+  function update() {
+    layout.font('impact').spiral('archimedean');
+    fontSize = d3.scale['sqrt']().range([10, 100]);
+    if (wordCountObjects.length){
+        fontSize.domain([+wordCountObjects[wordCountObjects.length - 1].value || 1, +wordCountObjects[0].value]);
+    }
+    layout.stop().words(wordCountObjects).start();
+  }
+
 
 
 }
@@ -96,7 +231,6 @@ function generateWordCloud() {
 
 $(document).ready(function(){
   convertShopNameToUserId("imitating");
-  // generateWordCloud("Thank you An amazing job Exactly what I asked. Adorable! Thank you Love them!");
 
   $("#shop-name-button").click(function(){
     event.preventDefault();
@@ -105,15 +239,18 @@ $(document).ready(function(){
     convertShopNameToUserId(shopName);
     $("#user-input").val("");
 
+    // convertReviewsKeyWords(allTheReviews);
+
+
   });
 
 //Remove once button actions are implemented
-  $(".share").click(function(){
+  $(".fa-question-circle, .fa-at").click(function(){
     alert("Sorry! This button is still under construction. Check back soon for updates.");
   });
 
 
   $(document).on("click", ".card", turnMeEtsyOrange)
-  $(document).on("click", "#cloud-button", generateWordCloud)
+  $(document).on("click", ".fa-cloud", convertReviewsKeyWords)
 
 });

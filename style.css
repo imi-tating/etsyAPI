@@ -64,6 +64,18 @@ a:visited {
   color: rgb(239, 77, 9);
 }
 
+#word-cloud {
+    position:relative;
+    min-width: 90%;
+    max-width: 800px;
+    height: auto;
+    margin:0 auto;
+}
+
+svg {
+    /* position:absolute; */
+}
+
 #main-content {
   margin: 0 auto;
   max-width: 90%;
@@ -101,7 +113,7 @@ a:visited {
   .card-columns {
     column-count: 3;
   }
-  
+
   #title {
     font-size: 6rem;
   }
