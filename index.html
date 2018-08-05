@@ -40,16 +40,22 @@
     <h1 id="title" class="display-4">Ellie's <i class="fab fa-etsy"></i>tsy <i class="fas fa-store"></i> Reviews</h1>
   </div>
 
-  <form class="form-group form-row">
-      <div class="col">
-        <input id="user-input" class="form-control form-control-lg text-right" type="text" placeholder="Enter Shop Name to See Reviews">
-      </div>
-      <div class="col-4">
-        <button id="shop-name-button" class="btn btn-outline-dark btn-lg" type="button">Show Me the Reviews</button>
-      </div>
+  <form class="form-inline">
+    <div class="form-group row">
+      <input id="user-input" class="form-control form-control-lg text-right" type="text" placeholder="Enter Shop Name">
+      <button id="shop-name-button" class="btn btn-outline-dark btn-lg" type="button">Show Reviews</button>
+    </div>
   </form>
 
   <h5 id="shop-being-viewed" class="text-center text-muted lead"></h5>
+
+  <div id="share-me" class="text-center">
+    <i class="fas fa-cloud text-dark share"></i>
+    <i class="fas fa-at text-dark share"></i>
+  </div>
+  <div id="word-cloud" class="text-center">
+    <img id="wordcloud"/>
+  </div>
   <div id="uhoh" class="row text-center"></div>
   <div id="main-content" class="card-columns">
 

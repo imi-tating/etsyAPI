@@ -77,7 +77,7 @@ function showReviews(reviewArray) {
 
 }
 
-function turnMeEtsyOrange(){
+function turnMeEtsyOrange() {
   if ($(this).attr("data-clicked") === "gray") {
     $(this).css("border-color", "rgb(239, 77, 9)");
     $(this).attr("data-clicked", "orange");
@@ -87,11 +87,16 @@ function turnMeEtsyOrange(){
   }
 }
 
+function generateWordCloud() {
+  // var wordCloudText = "Great quality and great customer service. Perfect! Just what we wanted!! Absolutely LOVE these sea turtles!! Awesome customer service, and shipping was prompt. I highly recommend this shop! Thank you again so much for my little grouping! LOVE these turtles! Great customer service, and fast shipping! Highly recommend this shop! Well be buying again! I had such a pleasant experience ordering from this shop! I sent several messages with questions/requests, and always had a reply within minutes. I really feel the owners go above and beyond to make sure the customer is happy. Communication was always very friendly, and my kids had a great time customizing the size and colour of their dinosaurs. The extra goodies and hand written note were a really nice touch, thank you. Application was also very easy! This is definitely going to be my go-to any time I want to purchase decals! Wonderful seller to work with! Went above and beyond to get the decals to me in time for Christmas. Gift recipient loved them!! Highly recommend this seller. Easy ordering and fast shipping. The colors are vibrant and pop against the color of our car. Seller included extra tiny decals so we got to test applications before the real one. I really appreciated that extra touch and my son loves that he got a tiny green dinosaur on his window. Received early and was everything I expected and more! Thanks again! The decal came FAST. It was well-made with attention to detail and the instructions for how to install it on my laptop were top notch. Would buy from this store again in a heart beat! Love these decals soooo much!! I love this!!!! Thank you An amazing job.. Exactly what I asked for…. Adorable!!! Thank you Love them! They come quick shipping time and the owners go above and beyond Looks great, easy to apply. Was a gift, and the recipient loves it."
 
+
+}
 
 
 $(document).ready(function(){
   convertShopNameToUserId("imitating");
+  // generateWordCloud("Thank you An amazing job Exactly what I asked. Adorable! Thank you Love them!");
 
   $("#shop-name-button").click(function(){
     // event.preventDefault();
@@ -106,6 +111,7 @@ $(document).ready(function(){
 
 
   $(document).on("click", ".card", turnMeEtsyOrange)
+  $(document).on("click", "#cloud-button", generateWordCloud)
 
 
 });

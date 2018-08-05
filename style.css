@@ -6,28 +6,47 @@
 .jumbotron {
   background: white;
   color: rgb(239, 77, 9);
-  padding: 5rem 0;
-  border-bottom: 1px solid rgb(26, 26, 26);
+  margin-bottom: 2rem;
+  padding: 2rem 0;
+  border-bottom: 1px solid rgb(25, 28, 31);
 }
 
 #title {
-  font-size: 6rem;
+  font-size: 3rem;
 }
 
 .form-group {
-  margin: 3rem auto;
-  max-width: 40rem;
+  margin: 0 auto;
+  max-width: 90%;
+}
+
+#shop-name-button {
+  margin-left: 1rem;
 }
 
 .form-control:focus {
   border-color: rgba(239, 77, 9, 0.1);
   box-shadow: 0 0 0 .2rem rgba(239, 77, 9, 0.7);
-
 }
 
 #shop-being-viewed {
-  margin-bottom: 2rem;
+  margin: 1rem auto;
   font-size: 1.4rem;
+}
+
+.share {
+  position: relative;
+  top: -177px;
+  font-size: 2rem;
+  margin: .4rem;
+}
+
+.fa-cloud {
+  text-shadow: -3px -3px 0 white, 2px -2px 0 white;
+}
+
+.fa-at{
+  text-shadow: -4px 0 0 white, 3px 0 0 white;
 }
 
 .uhoh {
@@ -41,7 +60,6 @@ a:link {
 }
 a:visited {
   color: rgb(239, 77, 9);
-
 }
 
 #main-content {
@@ -49,9 +67,35 @@ a:visited {
   max-width: 90%;
 }
 
+.card-columns {
+  column-count: 1;
+}
+
 .blockquote {
   font-size: 2rem;
 }
+
+@media screen and (min-width: 100rem) {
+  .card-columns {
+    column-count: 2;
+  }
+  #title {
+    font-size: 5rem;
+  }
+  #shop-being-viewed {
+    font-size: 1.5rem;
+  }
+}
+
+@media screen and (min-width: 170rem) {
+  .card-columns {
+    column-count: 3;
+  }
+  #title {
+    font-size: 6rem;
+  }
+}
+
 
 /* @media screen and (min-width: 80rem) {
   .fa-fish {
