@@ -99,7 +99,7 @@ $(document).ready(function(){
   // generateWordCloud("Thank you An amazing job Exactly what I asked. Adorable! Thank you Love them!");
 
   $("#shop-name-button").click(function(){
-    // event.preventDefault();
+    event.preventDefault();
     var shopName = $("#user-input").val().trim();
 
     convertShopNameToUserId(shopName);
@@ -107,11 +107,13 @@ $(document).ready(function(){
 
   });
 
-
+//Remove once button actions are implemented
+  $(".share").click(function(){
+    alert("Sorry! This button is still under construction. Check back soon for updates.");
+  });
 
 
   $(document).on("click", ".card", turnMeEtsyOrange)
   $(document).on("click", "#cloud-button", generateWordCloud)
-
 
 });
