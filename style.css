@@ -6,13 +6,32 @@
 .jumbotron {
   background: white;
   color: rgb(239, 77, 9);
-  margin-bottom: 3rem;
-  padding: 2rem 0;
+  margin-bottom: .1rem;
+  padding: 1rem 0;
   border-bottom: 1px solid rgb(25, 28, 31);
 }
 
 #title {
-  font-size: 3rem;
+  font-size: 1.5rem;
+}
+
+.share {
+  position: relative;
+  top: -.75rem;
+  font-size: 1.3rem;
+  margin: 0 .8rem;
+}
+
+.fa-cloud {
+  text-shadow: -.1rem -.1rem 0 white, .1rem -.1rem 0 white;
+}
+
+.fa-at{
+  text-shadow: -.1rem 0 0 white, .1rem 0 0 white, .1rem -.25rem 0 white;
+}
+
+.fa-question-circle {
+  text-shadow: -.12rem 0 0 white, .12rem 0 0 white, -.14rem 0 0 white, .14rem 0 0 white;
 }
 
 .form-group {
@@ -20,8 +39,14 @@
   max-width: 90%;
 }
 
-#shop-name-button {
-  margin-left: 1rem;
+.form-elements{
+  padding: .25rem .5rem;
+  font-size: .875rem;
+  line-height: 1.5rem;
+}
+
+.form-control {
+  max-width: 60%;
 }
 
 .form-control:focus {
@@ -30,26 +55,8 @@
 }
 
 #shop-being-viewed {
-  margin: 1rem auto;
-  font-size: 1.4rem;
-}
-
-.share {
-  position: relative;
-  top: -184px;
-  font-size: 2rem;
-  margin: 0 .8rem;
-}
-
-.fa-cloud {
-  text-shadow: -.2rem -.2rem 0 white, .2rem -.2rem 0 white;
-}
-
-.fa-at{
-  text-shadow: -.3rem 0 0 white, .2rem 0 0 white, .2rem .3rem 0 white;
-}
-.fa-question-circle {
-  text-shadow: -.2rem 0 0 white, .2rem 0 0 white, .3rem 0 0 white, -.3rem 0 0 white;
+  margin: .8rem auto 1.5rem;
+  font-size: .8rem;
 }
 
 .uhoh {
@@ -65,16 +72,16 @@ a:visited {
 }
 
 #word-cloud {
-    position:relative;
-    min-width: 90%;
-    max-width: 800px;
-    height: auto;
-    margin:0 auto;
+  position:relative;
+  min-width: 90%;
+  max-width: 800px;
+  height: auto;
+  margin:0 auto;
 }
 
-svg {
-    /* position:absolute; */
-}
+/* svg {
+    position:absolute;
+} */
 
 #main-content {
   margin: 0 auto;
@@ -86,44 +93,104 @@ svg {
 }
 
 .blockquote {
-  font-size: 2rem;
+  font-size: 1.1rem;
 }
 
-@media screen and (min-width: 100rem) {
-  .card-columns {
-    column-count: 2;
+
+@media screen and (min-width: 23rem) {
+  .jumbotron {
+    padding: 1.3rem 0;
   }
+
   #title {
-    font-size: 5rem;
+    font-size: 1.8rem;
   }
 
   .share {
-    position: relative;
-    top: -193px;
-    font-size: 3rem;
-    margin: 0 .8rem;
+    top: -.84rem;
+    font-size: 1.5rem;
   }
 
   #shop-being-viewed {
-    font-size: 1.5rem;
+    margin: 1rem auto 2rem;
+    font-size: .9rem;
+  }
+
+  .blockquote {
+    font-size: 1.3rem;
   }
 }
 
-@media screen and (min-width: 170rem) {
+
+@media screen and (min-width: 40rem) {
+  .card-columns {
+    column-count: 2;
+  }
+
+  #title {
+    font-size: 2.3rem;
+  }
+
+  .form-elements{
+    margin: .8rem;
+  }
+
+  .form-control {
+    max-width: 70%;
+  }
+
+  #shop-being-viewed {
+    margin: .4rem auto 1.6rem;
+    font-size: .9rem;
+  }
+
+}
+
+
+@media screen and (min-width: 60rem) {
   .card-columns {
     column-count: 3;
   }
 
   #title {
-    font-size: 6rem;
+    font-size: 3rem;
   }
+
+  .form-elements{
+    padding: .5rem 1rem;
+    font-size: 1.2rem;
+    line-height: 1.3rem;
+  }
+
+  #shop-being-viewed {
+    font-size: 1.1rem;
+  }
+
+  .blockquote {
+    font-size: 1.35rem;
+  }
+
 }
 
 
-/* @media screen and (min-width: 80rem) {
-  .fa-fish {
-    font-size: 2.3rem;
-    margin-right: .5rem;
+@media screen and (min-width: 80rem) {
+  #title {
+    font-size: 3.5rem;
   }
 
-} */
+  .share {
+    top: -.9rem;
+    font-size: 1.7rem;
+  }
+
+  .form-elements{
+    /* padding: .5rem 1rem; */
+    font-size: 1.35rem;
+    line-height: 1.7rem;
+  }
+
+  .blockquote {
+    font-size: 1.6rem;
+  }
+
+}
