@@ -6,7 +6,7 @@
 .jumbotron {
   background: white;
   color: rgb(239, 77, 9);
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
   padding: 2rem 0;
   border-bottom: 1px solid rgb(25, 28, 31);
 }
@@ -36,9 +36,9 @@
 
 .share {
   position: relative;
-  top: -177px;
+  top: -184px;
   font-size: 2rem;
-  margin: .4rem;
+  margin: 0 .8rem;
 }
 
 .fa-cloud {
@@ -48,10 +48,12 @@
 .fa-at{
   text-shadow: -4px 0 0 white, 3px 0 0 white;
 }
+.fa-question-circle {
+  text-shadow: -3px 0 0 white, 3px 0 0 white;
+}
 
 .uhoh {
   margin: 0 auto;
-  /* float: none; */
 }
 
 a:link {
@@ -82,6 +84,14 @@ a:visited {
   #title {
     font-size: 5rem;
   }
+
+  .share {
+    position: relative;
+    top: -193px;
+    font-size: 3rem;
+    margin: 0 .8rem;
+  }
+
   #shop-being-viewed {
     font-size: 1.5rem;
   }
