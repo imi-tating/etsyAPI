@@ -42,14 +42,14 @@
 }
 
 .fa-cloud {
-  text-shadow: -3px -3px 0 white, 2px -2px 0 white;
+  text-shadow: -.2rem -.2rem 0 white, .2rem -.2rem 0 white;
 }
 
 .fa-at{
-  text-shadow: -4px 0 0 white, 3px 0 0 white;
+  text-shadow: -.3rem 0 0 white, .2rem 0 0 white, .2rem .3rem 0 white;
 }
 .fa-question-circle {
-  text-shadow: -3px 0 0 white, 3px 0 0 white;
+  text-shadow: -.2rem 0 0 white, .2rem 0 0 white, .3rem 0 0 white, -.3rem 0 0 white;
 }
 
 .uhoh {
@@ -101,6 +101,7 @@ a:visited {
   .card-columns {
     column-count: 3;
   }
+  
   #title {
     font-size: 6rem;
   }
