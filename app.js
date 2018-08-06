@@ -1,12 +1,54 @@
 var allTheReviews = "";
+var someOfTheReviews = "";
+
+function determineHighlightedReviews() {
+  someOfTheReviews = "";
+  var highlightedReviews = $('[data-clicked="orange"]').find("p").text();
+  someOfTheReviews = highlightedReviews;
+  console.log("HIGHLIGHTED REVIEWS:");
+  console.log(highlightedReviews);
+}
+
+
+
 
 function toggleWordCloud() {
   if ($(".fa-cloud").attr("data-toggle") === "off") {
     $(".fa-cloud").attr("data-toggle", "on");
+    determineHighlightedReviews();
     convertReviewsKeyWords();
   } else {
     $(".fa-cloud").attr("data-toggle", "off");
     $("#word-cloud").empty();
+  }
+}
+
+//
+function toggleHelper() {
+  // if ($(".fa-question-circle").attr("data-toggle") === "off") {
+  //   $(".fa-question-circle").attr("data-toggle", "on");
+  //   alert("Click on cards below to highlight. This will limit both the Word Cloud results and the Share content to only include those reviews.");
+  //   //consider pop-up modal with tips for using the site
+  // } else {
+  //   $(".fa-question-circle").attr("data-toggle", "off");
+  //   // $("#word-cloud").empty();
+  // }
+
+
+
+
+
+
+}
+
+function toggleShare() {
+  if ($(".fa-at").attr("data-toggle") === "off") {
+    $(".fa-at").attr("data-toggle", "on");
+    alert("Ready to Share?");
+  //still need to create
+  } else {
+    $(".fa-at").attr("data-toggle", "off");
+    // $("#word-cloud").empty();
   }
 }
 
@@ -48,18 +90,20 @@ function convertShopNameToUserId(etsyStoreName) {
 function cleanUpReviews(text) {
   return text.replace(/&#39;/g, "'")
       .replace(/&amp;/g, "&")
-      .replace(/&quot;/g, '"');
+      .replace(/&quot;/g, '"')
+      .replace(/ !/g, '!');
 }
 
 function cleanUpForWordCloud(text) {
   return text.replace(/"/g, "")
-             .replace(/\./g, "")
+             .replace(/\./g, " ")
              .replace(/,/g, "")
              .replace(/'/g, "")
              .replace(/’/g, "")
-             .replace(/!/g, "")
+             .replace(/!/g, " ")
              .replace(/…/g, "")
              .replace(/\?/g, "");
+             // .replace(/  /g, " "); /*not sure if this works*/
              // .replace(/[^\w\s]/gi, '') /*only if I want letters only*/
 }
 
@@ -78,8 +122,11 @@ function showReviews(reviewArray) {
   $("#main-content").empty();
   $("#uhoh").empty();
   allTheReviews = "";
+  someOfTheReviews = "";
   $("#word-cloud").empty();
   $(".fa-cloud").attr("data-toggle", "off");
+  $(".fa-question-circle").attr("data-toggle", "off");
+  $(".fa-at").attr("data-toggle", "off");
 
 
   if (reviewArray.length === 0) {
@@ -87,7 +134,7 @@ function showReviews(reviewArray) {
   } else {
     for(var i = 0; i < reviewArray.length; i++){
       if(reviewArray[i].message) {
-        var review = reviewArray[i].message;
+        var review = " " + reviewArray[i].message;
         review = cleanUpReviews(review);
         var newCard = $('<div class="card p-3 text-right">');
         newCard.attr("data-clicked", "gray");
@@ -118,9 +165,15 @@ function turnMeEtsyOrange() {
 }
 
 function convertReviewsKeyWords() {
-  debugger
-  var text = cleanUpForWordCloud(allTheReviews)
+  var text;
+  if(someOfTheReviews == "") {
+    text = cleanUpForWordCloud(allTheReviews);
+    alert("using all reviews");
+  } else {
+    text = cleanUpForWordCloud(someOfTheReviews);
+    alert("using highlighted reviews");
 
+  }
   var keyWords = text.toLowerCase();
   var arrayOfKeyWords = keyWords.split(" ").filter(function(eachWord) {
     return !stopWords.includes(eachWord);
@@ -257,8 +310,6 @@ function generateWordCloud(wordCountObjects) {
     layout.stop().words(wordCountObjects).start();
   }
 
-
-
 }
 
 
@@ -271,16 +322,14 @@ $(document).ready(function(){
 
     convertShopNameToUserId(shopName);
     $("#user-input").val("");
-
   });
 
-//Remove once button actions are implemented
-  $(".fa-question-circle, .fa-at").click(function(){
-    alert("Sorry! This button is still under construction. Check back soon for updates.");
-  });
+  $(document).on("click", ".card", turnMeEtsyOrange);
+  $(document).on("click", ".fa-cloud", toggleWordCloud);
+  $(document).on("click", ".fa-question-circle", toggleHelper);
+  $(document).on("click", ".fa-at", toggleShare);
 
 
-  $(document).on("click", ".card", turnMeEtsyOrange)
-  $(document).on("click", ".fa-cloud", toggleWordCloud)
+
 
 });
