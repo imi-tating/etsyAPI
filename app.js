@@ -1,5 +1,15 @@
 var allTheReviews = "";
 
+function toggleWordCloud() {
+  if ($(".fa-cloud").attr("data-toggle") === "off") {
+    $(".fa-cloud").attr("data-toggle", "on");
+    convertReviewsKeyWords();
+  } else {
+    $(".fa-cloud").attr("data-toggle", "off");
+    $("#word-cloud").empty();
+  }
+}
+
 function convertShopNameToUserId(etsyStoreName) {
   var queryURL = "https://openapi.etsy.com/v2/shops?api_key=jh254t145a6wj2f9518tpu54&shop_name=" + etsyStoreName + "&limit=3"
 
@@ -7,18 +17,13 @@ function convertShopNameToUserId(etsyStoreName) {
     url: queryURL,
     method: "GET"
   }).then(function(response){
-
-    console.log("LOOK HERE!");
-    console.log(response);
-    console.log(" ");
     console.log("SHOPS FOUND:");
     console.log(response.results);
-    console.log("USER ID:");
-    console.log(response.results[0].user_id);
-
     var foundShopName = response.results[0].shop_name;
     var shopURL = response.results[0].url;
 
+    console.log("NEED TO ACCOUNT FOR NO SHOP FOUND:");
+    console.log(response);
     // if (response.count === 0) {
     //   alert("shop not found");
     // } else {
@@ -30,17 +35,32 @@ function convertShopNameToUserId(etsyStoreName) {
     //   findReviews(response.results[0].user_id)
     // }
 
-
     var newLink = $('<a>').attr("href", shopURL)
     newLink.attr("target", "_blank");
     newLink = newLink.text("Shop Being Viewed: " + foundShopName);
     $("#shop-being-viewed").empty();
     $("#shop-being-viewed").append(newLink);
-
     findReviews(response.results[0].user_id);
-
   })
 
+}
+
+function cleanUpReviews(text) {
+  return text.replace(/&#39;/g, "'")
+      .replace(/&amp;/g, "&")
+      .replace(/&quot;/g, '"');
+}
+
+function cleanUpForWordCloud(text) {
+  return text.replace(/"/g, "")
+             .replace(/\./g, "")
+             .replace(/,/g, "")
+             .replace(/'/g, "")
+             .replace(/’/g, "")
+             .replace(/!/g, "")
+             .replace(/…/g, "")
+             .replace(/\?/g, "");
+             // .replace(/[^\w\s]/gi, '') /*only if I want letters only*/
 }
 
 function findReviews(userId) {
@@ -50,7 +70,6 @@ function findReviews(userId) {
     url: queryURL,
     method: "GET"
   }).then(function(response){
-    console.log(response);
     showReviews(response.results)
   })
 }
@@ -59,27 +78,33 @@ function showReviews(reviewArray) {
   $("#main-content").empty();
   $("#uhoh").empty();
   allTheReviews = "";
+  $("#word-cloud").empty();
+  $(".fa-cloud").attr("data-toggle", "off");
+
 
   if (reviewArray.length === 0) {
     $("#uhoh").html('<div class="card p-3 text-right uhoh" ><div class="blockquote mb-0"><p>Sadly, there are no reviews to display.<br>Perhaps you can be the first!<p><hr><div class="footer lead text-muted">(this does require making a purchase from their shop)<div></div></div>');
   } else {
     for(var i = 0; i < reviewArray.length; i++){
       if(reviewArray[i].message) {
+        var review = reviewArray[i].message;
+        review = cleanUpReviews(review);
         var newCard = $('<div class="card p-3 text-right">');
         newCard.attr("data-clicked", "gray");
         var newBlockQuote = $('<div class="blockquote mb-0">');
         var newP = $('<p>');
 
-        newP.text(reviewArray[i].message.replace(/&#39;/g, "'"));
+        newP.text(review);
         newBlockQuote.append(newP);
         newCard.append(newBlockQuote);
         $("#main-content").append(newCard);
 
-        allTheReviews += reviewArray[i].message.replace(/&#39;/g, "'");
+        allTheReviews += review + " ";
       }
     }
   }
-  console.log("All the reviews: " + allTheReviews);
+  console.log("STRING OF ALL REVIEWS:");
+  console.log(allTheReviews);
 }
 
 function turnMeEtsyOrange() {
@@ -93,13 +118,10 @@ function turnMeEtsyOrange() {
 }
 
 function convertReviewsKeyWords() {
-  var text = allTheReviews;
-  // var convertApostrophyBack = text.replace(/&#39;/g, "'");
-  var noPunctuation = text.replace(/[\.\!\,\']/g, "");
-  // var removeWords = "a |an |the |and |this |that |these |those |he |his |her |hers |its |their |it |is |was |am |so |I |we |Id |my |you |your |yours |what |who |why |how |when |came |went |them |with |they |about |just |did |didnt |cant ";
-  // var re = new RegExp(removeWords, "gi")
-  // var keyWords = noPunctuation.replace(re,"");
-  var keyWords = noPunctuation.toLowerCase();
+  debugger
+  var text = cleanUpForWordCloud(allTheReviews)
+
+  var keyWords = text.toLowerCase();
   var arrayOfKeyWords = keyWords.split(" ").filter(function(eachWord) {
     return !stopWords.includes(eachWord);
   });
@@ -116,6 +138,7 @@ function generateKeyValuePairsObject(arrayOfWords) {
     }
     return current;
   }, {} /* this is the "current"/starting point/object */ );
+  console.log("WORDS COUNTED:");
   console.log(wordsCounted);
 
   var arrayOfObjects = [];
@@ -129,16 +152,24 @@ function generateKeyValuePairsObject(arrayOfWords) {
 
   var slicedArray = arrayOfObjects.slice(0,300);
 
-  console.log(slicedArray)
   generateWordCloud(slicedArray);
 }
 
 function generateWordCloud(wordCountObjects) {
-  // $(".fa-cloud").click();
-  // $("#word-cloud").append();
-  var fill = d3.scale.category20b();
-  var w = 800,
-        h = 800;
+  var colorFill = d3.scale.ordinal()
+    .domain([1, 2, 3, 4, 5])
+    .range(["#EF4D09", "#FF6C0A", "#505A63", "#CCC", "#FF7D00"]);
+  var fill = colorFill;
+
+  var w;
+  if(window.innerWidth < 600) {
+    w = window.innerWidth
+  } else {
+    w = 540;
+  }
+  // var w = window.innerWidth,
+  //       h = window.innerWidth;
+  var h = w;
   var max,
         fontSize;
   var layout = d3.layout.cloud()
@@ -153,8 +184,8 @@ function generateWordCloud(wordCountObjects) {
         .on("end", draw);
 
   var svg = d3.select("#word-cloud").append("svg")
-        // .attr("width", w)
-        // .attr("height", h);
+        .attr("width", w)
+        .attr("height", h);
 
   var vis = svg.append("g").attr("transform", "translate(" + [w >> 1, h >> 1] + ")");
 
@@ -162,15 +193,17 @@ function generateWordCloud(wordCountObjects) {
 
   if(window.attachEvent) {
     window.attachEvent('onresize', update);
-  } else if(window.addEventListener) {
-      window.addEventListener('resize', update);
   }
+  // else if(window.addEventListener) {
+  //     window.addEventListener('resize', update);
+  // }
 
   function draw(data, bounds) {
-      var w = 800,
-            h = 800;
+      // var w = window.innerWidth,
+      //       h = window.innerWidth;
 
-      svg.attr("viewBox", "0 0 700 700");
+      svg.attr("width", w).attr("height", w);
+      // svg.attr("viewBox", "0 0 700 700");
 
       scale = bounds ? Math.min(
               w / Math.abs(bounds[1].x - w / 2),
@@ -239,9 +272,6 @@ $(document).ready(function(){
     convertShopNameToUserId(shopName);
     $("#user-input").val("");
 
-    // convertReviewsKeyWords(allTheReviews);
-
-
   });
 
 //Remove once button actions are implemented
@@ -251,6 +281,6 @@ $(document).ready(function(){
 
 
   $(document).on("click", ".card", turnMeEtsyOrange)
-  $(document).on("click", ".fa-cloud", convertReviewsKeyWords)
+  $(document).on("click", ".fa-cloud", toggleWordCloud)
 
 });
