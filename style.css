@@ -101,6 +101,10 @@ a:visited {
   font-size: 1.1rem;
 }
 
+.clickable {
+  cursor: pointer;
+}
+
 
 @media screen and (min-width: 23rem) {
   .jumbotron {

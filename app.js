@@ -136,7 +136,7 @@ function showReviews(reviewArray) {
       if(reviewArray[i].message) {
         var review = " " + reviewArray[i].message;
         review = cleanUpReviews(review);
-        var newCard = $('<div class="card p-3 text-right">');
+        var newCard = $('<div class="card p-3 text-right clickable">');
         newCard.attr("data-clicked", "gray");
         var newBlockQuote = $('<div class="blockquote mb-0">');
         var newP = $('<p>');
