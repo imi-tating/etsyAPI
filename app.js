@@ -9,9 +9,6 @@ function determineHighlightedReviews() {
   console.log(highlightedReviews);
 }
 
-
-
-
 function toggleWordCloud() {
   if ($(".fa-cloud").attr("data-toggle") === "off") {
     $(".fa-cloud").attr("data-toggle", "on");
@@ -25,20 +22,13 @@ function toggleWordCloud() {
 
 //
 function toggleHelper() {
-  // if ($(".fa-question-circle").attr("data-toggle") === "off") {
-  //   $(".fa-question-circle").attr("data-toggle", "on");
-  //   alert("Click on cards below to highlight. This will limit both the Word Cloud results and the Share content to only include those reviews.");
-  //   //consider pop-up modal with tips for using the site
-  // } else {
-  //   $(".fa-question-circle").attr("data-toggle", "off");
-  //   // $("#word-cloud").empty();
-  // }
-
-
-
-
-
-
+  if ($(".fa-question-circle").attr("data-toggle") === "off") {
+    $(".fa-question-circle").attr("data-toggle", "on");
+    alert("Click on cards below to highlight. This will limit both the Word Cloud results and the Share content to only include those reviews.");
+    //consider pop-up modal with tips for using the site
+  } else {
+    $(".fa-question-circle").attr("data-toggle", "off");
+  }
 }
 
 function toggleShare() {
@@ -53,12 +43,17 @@ function toggleShare() {
 }
 
 function convertShopNameToUserId(etsyStoreName) {
-  var queryURL = "https://openapi.etsy.com/v2/shops?api_key=jh254t145a6wj2f9518tpu54&shop_name=" + etsyStoreName + "&limit=3"
+  var queryURL = "https://openapi.etsy.com/v2/shops.js?api_key=jh254t145a6wj2f9518tpu54&shop_name=" + etsyStoreName + "&limit=3"
 
   $.ajax({
     url: queryURL,
-    method: "GET"
+    method: "GET",
+    dataType: "jsonp"
   }).then(function(response){
+    if(!response.ok) {
+      $("#word-cloud").text("Something's Broken! Try Again Later.");
+      return
+    }
     console.log("SHOPS FOUND:");
     console.log(response.results);
     var foundShopName = response.results[0].shop_name;
@@ -102,18 +97,23 @@ function cleanUpForWordCloud(text) {
              .replace(/’/g, "")
              .replace(/!/g, " ")
              .replace(/…/g, "")
-             .replace(/\?/g, "");
-             // .replace(/  /g, " "); /*not sure if this works*/
+             .replace(/\?/g, "")
+             .replace("  ", " ");
              // .replace(/[^\w\s]/gi, '') /*only if I want letters only*/
 }
 
 function findReviews(userId) {
-  var queryURL = "https://openapi.etsy.com/v2/users/"+ userId + "/feedback/from-buyers?api_key=jh254t145a6wj2f9518tpu54&limit=100"
+  var queryURL = "https://openapi.etsy.com/v2/users/"+ userId + "/feedback/from-buyers.js?api_key=jh254t145a6wj2f9518tpu54&limit=100"
 
   $.ajax({
     url: queryURL,
-    method: "GET"
+    method: "GET",
+    dataType: "jsonp"
   }).then(function(response){
+    if(!response.ok) {
+      $("#word-cloud").text("Something's Broken! Try Again Later.");
+      return
+    }
     showReviews(response.results)
   })
 }
