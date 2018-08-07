@@ -1,4 +1,5 @@
 var stopWords = [
+  "unable",
   "&quot;",
   "&quot;inverted&quot;",
   "(i",
