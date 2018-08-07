@@ -311,7 +311,7 @@ function generateWordCloud(wordCountObjects) {
   }
 
   function update() {
-    layout.font('impact').spiral('archimedean');
+    layout.font('impact, HelveticaNeue-CondensedBold').spiral('archimedean');
     fontSize = d3.scale['sqrt']().range([10, 100]);
     if (wordCountObjects.length){
         fontSize.domain([+wordCountObjects[wordCountObjects.length - 1].value || 1, +wordCountObjects[0].value]);

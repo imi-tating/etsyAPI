@@ -80,9 +80,9 @@ a:visited {
   text-align: center;
 }
 
-#word-cloud text {
-  font-family: Impact, HelveticaNeue-CondensedBold, Sans-Serif;
-}
+/* #word-cloud svg {
+  font-family: Impact, "HelveticaNeue-CondensedBold", Sans-Serif;
+} */
 
 .container {
   margin: 0;
