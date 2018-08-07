@@ -13,6 +13,9 @@
   <!--Firebase Link-->
     <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-database.js"></script>
+  <!--html2canvas link-->
+    <script type="text/javascript" src="./assets/js/html2canvas.min.js">
+    </script>
   <!--load stopWords file-->
     <script src="stopWords.js" charset="utf-8"></script>
   <!--bower & d3 Link (for wordCloud)-->
@@ -59,9 +62,8 @@
   </form>
 
   <h5 id="shop-being-viewed" class="text-center text-muted lead"></h5>
-  <div class="container mx-auto">
+  <div class="container row mx-auto">
     <div id="word-cloud"></div>
-
   </div>
   <div id="uhoh" class="row text-center"></div>
   <div id="main-content" class="card-columns"></div>

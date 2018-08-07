@@ -72,12 +72,16 @@ a:visited {
 }
 
 #word-cloud {
-  position:relative;
-  /* min-width: 100%; */
-  /* max-width: 800px; */
-  /* height: auto; */
+
+  display: inline-block;
+
+  /* position:relative; */
   margin: 0 auto 1rem;
   text-align: center;
+}
+
+text {
+  font-family: "Impact", "HelveticaNeue-CondensedBlack", "sans-serif";
 }
 
 .container {

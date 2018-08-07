@@ -42,6 +42,14 @@ function toggleShare() {
   }
 }
 
+
+function shareContent() {
+  html2canvas(document.getElementById("word-cloud")).then(function(canvas) {
+    var imageData = canvas.toDataURL("image/png")
+	$("<img>").attr("src", imageData).attr("style", "height: 540px").appendTo($("body"))
+});
+}
+
 function convertShopNameToUserId(etsyStoreName) {
   var queryURL = "https://openapi.etsy.com/v2/shops.js?api_key=jh254t145a6wj2f9518tpu54&shop_name=" + etsyStoreName + "&limit=3"
 
@@ -172,8 +180,8 @@ function convertReviewsKeyWords() {
   } else {
     text = cleanUpForWordCloud(someOfTheReviews);
     alert("using highlighted reviews");
-
   }
+
   var keyWords = text.toLowerCase();
   var arrayOfKeyWords = keyWords.split(" ").filter(function(eachWord) {
     return !stopWords.includes(eachWord);
@@ -238,7 +246,8 @@ function generateWordCloud(wordCountObjects) {
 
   var svg = d3.select("#word-cloud").append("svg")
         .attr("width", w)
-        .attr("height", h);
+        .attr("height", h)
+        .attr("id", "word-cloud-svg");
 
   var vis = svg.append("g").attr("transform", "translate(" + [w >> 1, h >> 1] + ")");
 
