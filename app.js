@@ -14,31 +14,44 @@ function toggleWordCloud() {
     $(".fa-cloud").attr("data-toggle", "on");
     determineHighlightedReviews();
     convertReviewsKeyWords();
+    $("#word-cloud").append('<p class= alert alert-secondary>Click <a href="#" class="alert-link">here</a> to save this Word Cloud to your device</p>');
+
+    // $("#alerts").addClass("alert alert-light");
+    // if(someOfTheReviews == "") {
+    //   $("#alerts").append('<p>Using all reviews.</p>');
+    // } else {
+    //   $("#alerts").append('<p>Using only highlighted reviews.</p>');
+    // }
+
   } else {
     $(".fa-cloud").attr("data-toggle", "off");
     $("#word-cloud").empty();
   }
 }
 
-//
 function toggleHelper() {
   if ($(".fa-question-circle").attr("data-toggle") === "off") {
+    $(".fa-patreon").attr("data-toggle", "off");
+    $("#alerts").removeClass().empty();
     $(".fa-question-circle").attr("data-toggle", "on");
-    alert("Click on cards below to highlight. This will limit the Word Cloud results to only include those reviews.");
-    //consider pop-up modal with tips for using the site
+    $("#alerts").addClass("alert alert-light");
+    $("#alerts").append('<p>Click on cards below to highlight. This will limit the Word Cloud results to only include those reviews.</p>');
   } else {
+    $("#alerts").removeClass().empty();
     $(".fa-question-circle").attr("data-toggle", "off");
   }
 }
 
 function togglePatreon() {
   if ($(".fa-patreon").attr("data-toggle") === "off") {
+    $(".fa-question-circle").attr("data-toggle", "off");
+    $("#alerts").removeClass().empty();
     $(".fa-patreon").attr("data-toggle", "on");
     $("#alerts").addClass("alert alert-dark");
     $("#alerts").append('<p>Want to support us & keep us working on new projects? <a href="https://www.patreon.com/parkerandleigh" target=_blank class="alert-link">Visit our Patreon here.</a></p>');
   } else {
+    $("#alerts").removeClass().empty();
     $(".fa-patreon").attr("data-toggle", "off");
-    $("#alerts").removeClass("alert alert-dark").empty();
   }
 }
 
@@ -176,10 +189,10 @@ function convertReviewsKeyWords() {
   var text;
   if(someOfTheReviews == "") {
     text = cleanUpForWordCloud(allTheReviews);
-    alert("Using all reviews");
+    // alert("Using all reviews");
   } else {
     text = cleanUpForWordCloud(someOfTheReviews);
-    alert("Using only highlighted reviews");
+    // alert("Using only highlighted reviews");
   }
 
   var keyWords = text.toLowerCase();

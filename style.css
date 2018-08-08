@@ -38,6 +38,10 @@
   text-shadow: -.2rem 0 0 white, .2rem 0 0 white;
 }
 
+#alerts {
+  text-align: center;
+}
+
 .form-group {
   margin: 0 auto;
   max-width: 90%;
