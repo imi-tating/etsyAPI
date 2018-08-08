@@ -26,12 +26,16 @@
   text-shadow: -.1rem -.1rem 0 white, .1rem -.1rem 0 white;
 }
 
-.fa-at{
+/* .fa-at{
   text-shadow: -.1rem 0 0 white, .1rem 0 0 white, .1rem -.25rem 0 white;
-}
+} */
 
 .fa-question-circle {
-  text-shadow: -.12rem 0 0 white, .12rem 0 0 white, -.14rem 0 0 white, .14rem 0 0 white;
+  text-shadow: -.2rem 0 0 white, .2rem 0 0 white;
+}
+
+.fa-patreon{
+  text-shadow: -.2rem 0 0 white, .2rem 0 0 white;
 }
 
 .form-group {

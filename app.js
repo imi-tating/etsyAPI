@@ -24,21 +24,21 @@ function toggleWordCloud() {
 function toggleHelper() {
   if ($(".fa-question-circle").attr("data-toggle") === "off") {
     $(".fa-question-circle").attr("data-toggle", "on");
-    alert("Click on cards below to highlight. This will limit both the Word Cloud results and the Share content to only include those reviews.");
+    alert("Click on cards below to highlight. This will limit the Word Cloud results to only include those reviews.");
     //consider pop-up modal with tips for using the site
   } else {
     $(".fa-question-circle").attr("data-toggle", "off");
   }
 }
 
-function toggleShare() {
-  if ($(".fa-at").attr("data-toggle") === "off") {
-    $(".fa-at").attr("data-toggle", "on");
-    alert("Ready to Share?");
-  //still need to create
+function togglePatreon() {
+  if ($(".fa-patreon").attr("data-toggle") === "off") {
+    $(".fa-patreon").attr("data-toggle", "on");
+    $("#alerts").addClass("alert alert-dark");
+    $("#alerts").append('<p>Want to support us & keep us working on new projects? <a href="https://www.patreon.com/parkerandleigh" target=_blank class="alert-link">Visit our Patreon here.</a></p>');
   } else {
-    $(".fa-at").attr("data-toggle", "off");
-    // $("#word-cloud").empty();
+    $(".fa-patreon").attr("data-toggle", "off");
+    $("#alerts").removeClass("alert alert-dark").empty();
   }
 }
 
@@ -134,7 +134,7 @@ function showReviews(reviewArray) {
   $("#word-cloud").empty();
   $(".fa-cloud").attr("data-toggle", "off");
   $(".fa-question-circle").attr("data-toggle", "off");
-  $(".fa-at").attr("data-toggle", "off");
+  $(".fa-patreon").attr("data-toggle", "off");
 
 
   if (reviewArray.length === 0) {
@@ -176,10 +176,10 @@ function convertReviewsKeyWords() {
   var text;
   if(someOfTheReviews == "") {
     text = cleanUpForWordCloud(allTheReviews);
-    alert("using all reviews");
+    alert("Using all reviews");
   } else {
     text = cleanUpForWordCloud(someOfTheReviews);
-    alert("using highlighted reviews");
+    alert("Using only highlighted reviews");
   }
 
   var keyWords = text.toLowerCase();
@@ -336,7 +336,7 @@ $(document).ready(function(){
   $(document).on("click", ".card", turnMeEtsyOrange);
   $(document).on("click", ".fa-cloud", toggleWordCloud);
   $(document).on("click", ".fa-question-circle", toggleHelper);
-  $(document).on("click", ".fa-at", toggleShare);
+  $(document).on("click", ".fa-patreon", togglePatreon);
 
 
 
