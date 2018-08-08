@@ -207,8 +207,6 @@ function generateKeyValuePairsObject(arrayOfWords) {
     arrayOfObjects.push({ key: word, value: wordsCounted[word] });
   }
 
-
-
   arrayOfObjects.sort(function (a, b) {
     return b.value - a.value
   })
