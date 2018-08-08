@@ -2,6 +2,30 @@
   font-size: 1.5rem;
   margin-right: -.5rem;
 } */
+.canvas-container {
+  height: 100%;
+  position: relative;
+  width: 100%;
+}
+
+.canvas {
+  height: 100%;
+  position: relative;
+  width: 100%;
+  z-index: 1;
+}
+
+.canvas-mirror {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+
+
+
 
 .jumbotron {
   background: white;

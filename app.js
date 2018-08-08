@@ -14,15 +14,7 @@ function toggleWordCloud() {
     $(".fa-cloud").attr("data-toggle", "on");
     determineHighlightedReviews();
     convertReviewsKeyWords();
-    $("#word-cloud").append('<p class= alert alert-secondary>Click <a href="#" class="alert-link">here</a> to save this Word Cloud to your device</p>');
-
-    // $("#alerts").addClass("alert alert-light");
-    // if(someOfTheReviews == "") {
-    //   $("#alerts").append('<p>Using all reviews.</p>');
-    // } else {
-    //   $("#alerts").append('<p>Using only highlighted reviews.</p>');
-    // }
-
+    $("#word-cloud").append('<p class= alert alert-secondary>Click <a href="#" id="save-word-cloud" class="alert-link">here</a> to save this Word Cloud to your device</p>');
   } else {
     $(".fa-cloud").attr("data-toggle", "off");
     $("#word-cloud").empty();
@@ -55,12 +47,13 @@ function togglePatreon() {
   }
 }
 
-
-function shareContent() {
+function canvasContent() {
   html2canvas(document.getElementById("word-cloud")).then(function(canvas) {
-    var imageData = canvas.toDataURL("image/png")
-	$("<img>").attr("src", imageData).attr("style", "height: 540px").appendTo($("body"))
-});
+    var imageData = canvas.toDataURL("image/png");
+  	$("<img>").attr("src", imageData).attr("style", "height: 540px").appendTo($("body"));
+
+  });
+
 }
 
 function convertShopNameToUserId(etsyStoreName) {
@@ -350,8 +343,5 @@ $(document).ready(function(){
   $(document).on("click", ".fa-cloud", toggleWordCloud);
   $(document).on("click", ".fa-question-circle", toggleHelper);
   $(document).on("click", ".fa-patreon", togglePatreon);
-
-
-
 
 });
