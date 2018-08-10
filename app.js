@@ -39,7 +39,7 @@ function toggleHelper() {
     $("#alerts").removeClass().empty();
     $(".fa-question-circle").attr("data-toggle", "on");
     $("#alerts").addClass("alert alert-light");
-    $("#alerts").append('<p>Click the Cloud button to generate a Word Cloud.<br>Click on cards below to highlight: this will limit the Word Cloud results to only include those reviews.</p>');
+    $("#alerts").append('<p class="tip">Click the <i class="fas fa-cloud" ></i> button to generate a Word Cloud.</p><p class="tip">Click on cards below to highlight: this will limit the Word Cloud results to only include those reviews.</p><p class="tip">To save Word Cloud image: tap + hold (mobile device) | right-click (desktop).</p>');
   } else {
     $("#alerts").removeClass().empty();
     $(".fa-question-circle").attr("data-toggle", "off");

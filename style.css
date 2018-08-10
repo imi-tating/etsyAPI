@@ -38,6 +38,10 @@
   text-shadow: -.2rem 0 0 white, .2rem 0 0 white;
 }
 
+.tip {
+  margin-bottom: 1.1rem;
+}
+
 #alerts {
   text-align: center;
 }
