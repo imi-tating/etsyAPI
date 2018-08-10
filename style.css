@@ -40,10 +40,13 @@
 
 #alerts {
   text-align: center;
-  margin-bottom: 0;
 }
 
 .tip {
+  font-size: .9rem;
+}
+
+#alerts p:not(:first-child){
   margin-top: .6rem;
 }
 
