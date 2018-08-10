@@ -38,12 +38,17 @@
   text-shadow: -.2rem 0 0 white, .2rem 0 0 white;
 }
 
-.tip {
-  margin-bottom: 1.1rem;
-}
-
 #alerts {
   text-align: center;
+  margin-bottom: 0;
+}
+
+.tip {
+  margin-top: .6rem;
+}
+
+p {
+  margin-bottom: 0;
 }
 
 .form-group {
