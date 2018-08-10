@@ -2,30 +2,6 @@
   font-size: 1.5rem;
   margin-right: -.5rem;
 } */
-.canvas-container {
-  height: 100%;
-  position: relative;
-  width: 100%;
-}
-
-.canvas {
-  height: 100%;
-  position: relative;
-  width: 100%;
-  z-index: 1;
-}
-
-.canvas-mirror {
-  height: 100%;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 100%;
-}
-
-
-
-
 
 .jumbotron {
   background: white;
@@ -104,21 +80,24 @@ a:visited {
 }
 
 #word-cloud {
-
-  display: inline-block;
-
-  /* position:relative; */
-  margin: 0 auto 1rem;
+  position:relative;
+  margin: 0 auto;
   text-align: center;
+}
+
+#share-word-cloud {
+  width: 100%;
+}
+
+img {
+  position: absolute;
+  left: 0;
 }
 
 .container {
   margin: 0;
   padding: 0;
 }
-/* svg {
-    position:absolute;
-} */
 
 #main-content {
   margin: 0 auto;

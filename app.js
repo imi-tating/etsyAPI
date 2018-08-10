@@ -14,7 +14,7 @@ function toggleWordCloud() {
     $(".fa-cloud").attr("data-toggle", "on");
     determineHighlightedReviews();
     convertReviewsKeyWords();
-    $("#word-cloud").append('<p class= alert alert-secondary>Click <a href="#" id="save-word-cloud" class="alert-link">here</a> to save this Word Cloud to your device</p>');
+    // $("#share-word-cloud").attr("alert alert-light").text("to save your word cloud");
   } else {
     $(".fa-cloud").attr("data-toggle", "off");
     $("#word-cloud").empty();
@@ -50,10 +50,13 @@ function togglePatreon() {
 function canvasContent() {
   html2canvas(document.getElementById("word-cloud")).then(function(canvas) {
     var imageData = canvas.toDataURL("image/png");
-  	$("<img>").attr("src", imageData).attr("style", "height: 540px").appendTo($("body"));
+    var imageWidth = $("#word-cloud-svg").css("width");
+    var imageHeight = $("#word-cloud-svg").css("height");
+  	$("<img>").attr("src", imageData).attr("width", imageWidth).attr("height", imageHeight).appendTo($("#word-cloud"));
+
+    $("#word-cloud").attr("width", imageWidth).attr("height", imageHeight).appendTo($("#word-cloud"));
 
   });
-
 }
 
 function convertShopNameToUserId(etsyStoreName) {
@@ -259,13 +262,6 @@ function generateWordCloud(wordCountObjects) {
 
   update();
 
-  if(window.attachEvent) {
-    window.attachEvent('onresize', update);
-  }
-  // else if(window.addEventListener) {
-  //     window.addEventListener('resize', update);
-  // }
-
   function draw(data, bounds) {
       // var w = window.innerWidth,
       //       h = window.innerWidth;
@@ -283,14 +279,9 @@ function generateWordCloud(wordCountObjects) {
               .data(data, function(d) {
                   return d.text.toLowerCase();
               });
-      text.transition()
-              .duration(1000)
-              .attr("transform", function(d) {
-                  return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
-              })
-              .style("font-size", function(d) {
-                  return d.size + "px";
-              });
+
+      var itemsAdded = 0;
+
       text.enter().append("text")
               .attr("text-anchor", "middle")
               .attr("transform", function(d) {
@@ -298,25 +289,29 @@ function generateWordCloud(wordCountObjects) {
               })
               .style("font-size", function(d) {
                   return d.size + "px";
-              })
-              .style("opacity", 1e-6)
-              .transition()
-              .duration(1000)
-              .style("opacity", 1);
+              });
+
+      text.each(function () {
+              itemsAdded++;
+              if (itemsAdded === data.length) {
+                canvasContent()
+              }
+            })
+
       text.style("font-family", function(d) {
           return d.font;
       })
-              .style("fill", function(d) {
-                  return fill(d.text.toLowerCase());
-              })
-              .text(function(d) {
-                  return d.text;
-              });
-
-      vis.transition().attr("transform", "translate(" + [w >> 1, h >> 1] + ")scale(" + scale + ")");
+          .style("fill", function(d) {
+              return fill(d.text.toLowerCase());
+          })
+          .text(function(d) {
+              return d.text;
+          });
   }
 
   function update() {
+    // return;
+
     layout.font('impact, AvenirNextCondensed-Heavy').spiral('archimedean');
     fontSize = d3.scale['sqrt']().range([10, 100]);
     if (wordCountObjects.length){
