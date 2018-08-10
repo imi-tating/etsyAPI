@@ -1,3 +1,15 @@
+// Initialize Firebase
+// var config = {
+//    apiKey: "AIzaSyCjo9fBFhKQS8ngR9sTTcs86ITJVntAChU",
+//    authDomain: "etsytracker.firebaseapp.com",
+//    databaseURL: "https://etsytracker.firebaseio.com",
+//    projectId: "etsytracker",
+//    storageBucket: "etsytracker.appspot.com",
+//    messagingSenderId: "353008995687"
+// };
+// firebase.initializeApp(config);
+// var database = firebase.database();
+
 var allTheReviews = "";
 var someOfTheReviews = "";
 
@@ -14,7 +26,7 @@ function toggleWordCloud() {
     $(".fa-cloud").attr("data-toggle", "on");
     determineHighlightedReviews();
     convertReviewsKeyWords();
-    // $("#share-word-cloud").attr("alert alert-light").text("to save your word cloud");
+    // $("#share-word-cloud").addClass("alert alert-light text-center").text("Tap and hold Word Cloud image to save to your mobile device or right-click to save to your computer");
   } else {
     $(".fa-cloud").attr("data-toggle", "off");
     $("#word-cloud").empty();
@@ -55,7 +67,6 @@ function canvasContent() {
   	$("<img>").attr("src", imageData).attr("width", imageWidth).attr("height", imageHeight).appendTo($("#word-cloud"));
 
     $("#word-cloud").attr("width", imageWidth).attr("height", imageHeight).appendTo($("#word-cloud"));
-
   });
 }
 
@@ -95,9 +106,18 @@ function convertShopNameToUserId(etsyStoreName) {
     $("#shop-being-viewed").empty();
     $("#shop-being-viewed").append(newLink);
     findReviews(response.results[0].user_id);
+
+    // updateFirebase(foundShopName);
   })
 
 }
+
+
+// function updateFirebase(foundShopName) {
+//   database.ref("/user-searches").push({
+//     shop: foundShopName
+//   });
+// }
 
 function cleanUpReviews(text) {
   return text.replace(/&#39;/g, "'")
@@ -321,7 +341,6 @@ function generateWordCloud(wordCountObjects) {
   }
 
 }
-
 
 $(document).ready(function(){
   convertShopNameToUserId("imitating");
