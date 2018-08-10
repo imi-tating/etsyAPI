@@ -1,14 +1,14 @@
 // Initialize Firebase
-// var config = {
-//    apiKey: "AIzaSyCjo9fBFhKQS8ngR9sTTcs86ITJVntAChU",
-//    authDomain: "etsytracker.firebaseapp.com",
-//    databaseURL: "https://etsytracker.firebaseio.com",
-//    projectId: "etsytracker",
-//    storageBucket: "etsytracker.appspot.com",
-//    messagingSenderId: "353008995687"
-// };
-// firebase.initializeApp(config);
-// var database = firebase.database();
+var config = {
+   apiKey: "AIzaSyCjo9fBFhKQS8ngR9sTTcs86ITJVntAChU",
+   authDomain: "etsytracker.firebaseapp.com",
+   databaseURL: "https://etsytracker.firebaseio.com",
+   projectId: "etsytracker",
+   storageBucket: "etsytracker.appspot.com",
+   messagingSenderId: "353008995687"
+};
+firebase.initializeApp(config);
+var database = firebase.database();
 
 var allTheReviews = "";
 var someOfTheReviews = "";
@@ -39,7 +39,7 @@ function toggleHelper() {
     $("#alerts").removeClass().empty();
     $(".fa-question-circle").attr("data-toggle", "on");
     $("#alerts").addClass("alert alert-light");
-    $("#alerts").append('<p>Click on cards below to highlight. This will limit the Word Cloud results to only include those reviews.</p>');
+    $("#alerts").append('<p>Click the Cloud button to generate a Word Cloud.<br>Click on cards below to highlight: this will limit the Word Cloud results to only include those reviews.</p>');
   } else {
     $("#alerts").removeClass().empty();
     $(".fa-question-circle").attr("data-toggle", "off");
@@ -107,17 +107,19 @@ function convertShopNameToUserId(etsyStoreName) {
     $("#shop-being-viewed").append(newLink);
     findReviews(response.results[0].user_id);
 
-    // updateFirebase(foundShopName);
+    updateFirebase(foundShopName);
   })
-
 }
 
+function updateFirebase(foundShopName) {
+  if(foundShopName !== "parkerandleigh") {
+    database.ref("/user-searches").push({
+      shop: foundShopName
+      // counter: ++;
+    });
+  }
 
-// function updateFirebase(foundShopName) {
-//   database.ref("/user-searches").push({
-//     shop: foundShopName
-//   });
-// }
+}
 
 function cleanUpReviews(text) {
   return text.replace(/&#39;/g, "'")
